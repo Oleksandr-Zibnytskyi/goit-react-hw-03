@@ -41,7 +41,7 @@ function ContactForm({ addContact }) {
       onSubmit={handleSubmit}
       validationSchema={ValidationForm}
     >
-      <form className={css.form}>
+      <Form className={css.form}>
         <div className={css.formGroup}>
           <label htmlFor={nameFieldId}>name</label>
           <Field 
@@ -70,8 +70,8 @@ function ContactForm({ addContact }) {
           />
         </div>
 
-        <button type="submit">Add contact</button>
-      </form>
+        <button className={css.btn} type="submit">Add contact</button>
+      </Form>
     </Formik>
   );
 }
