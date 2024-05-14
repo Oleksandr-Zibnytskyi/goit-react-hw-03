@@ -1,0 +1,22 @@
+.form {
+display: flex;
+flex-direction: column;
+gap: 8px;
+max-width: 400px;
+padding: 8px;
+bottom: 1px solid black;
+}
+
+.input {
+font: inherit
+}
+
+.formGroup {
+display: flex;
+flex-direction: column;
+}
+
+.err {
+    color: orangered;
+    font-size: 14px;
+}

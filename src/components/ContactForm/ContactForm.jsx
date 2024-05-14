@@ -1,27 +1,79 @@
-import { Formik } from "formik";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 import css from "./ContactForm.module.css";
+import * as Yup from "yup";
+import { useId } from "react";
+import { nanoid } from 'nanoid'
 
 function ContactForm({ addContact }) {
-  
-  
-  const handleSubmit = () => {};
+
+  const nameFieldId = useId();
+  const numberFieldId = useId();
+
+  const handleSubmit = (values, actions) => {
+    addContact({
+      id: nanoid(),
+      name: values.name,
+      number: values.number,
+    });
+    actions.resetForm();
+  };
+
+  const ValidationForm = Yup.object().shape({
+    name: Yup.string()
+      .min(3, "Too Short!")
+      .max(50, "Too Long!")
+      .required("Required"),
+    number: Yup.string()
+      .min(3, "Too Short!")
+      .max(50, "Too Long!")
+      .required("Required"),
+  });
+
+  const initialContact = {
+    name: "",
+    number: "",
+  };
+
 
   return (
-    <Formik initialValues={{ name: "", number: "" }}>
-      <form className={css.form} onSubmit={handleSubmit}>
-        <div>
-          <label></label>
-        <input type="text" name="text" />
+    <Formik
+      initialValues={initialContact}
+      onSubmit={handleSubmit}
+      validationSchema={ValidationForm}
+    >
+      <form className={css.form}>
+        <div className={css.formGroup}>
+          <label htmlFor={nameFieldId}>name</label>
+          <Field 
+          className={css.input} 
+          type="text" 
+          name="name"
+          id={nameFieldId} 
+          />
+          <ErrorMessage className={css.err} 
+          name="name" 
+          component="span" 
+          />
+        </div>
+
+        <div className={css.formGroup}>
+          <label htmlFor={numberFieldId}>number</label>
+          <Field className={css.input} 
+          type="text" 
+          name="number" 
+          id={numberFieldId} 
+          />
+          <ErrorMessage 
+          className={css.err} 
+          name="number" 
+          component="span" 
+          />
+        </div>
 
         <button type="submit">Add contact</button>
-        
-        </div>
       </form>
-     
     </Formik>
   );
 }
 
 export default ContactForm;
-
-
